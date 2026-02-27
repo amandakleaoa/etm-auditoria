@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tarefas - ETM</title>
+
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+</head>
+
+<body>
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="../assets/img/logo-grupo-ka.png" class="brand-logo" />
+        <span class="brand-name">ETM</span>
+      </div>
+
+      <nav class="menu">
+        <a class="item" href="../dashboard/index.html"><span>Dashboard</span></a>
+        <a class="item active" href="./index.html"><span>Tarefas</span></a>
+        <a class="item" href="#"><span>Categorias</span></a>
+        <a class="item" href="#"><span>Tags</span></a>
+        <a class="item" href="#"><span>Histórico</span></a>
+      </nav>
+
+      <div class="spacer"></div>
+
+      <nav class="menu">
+        <a class="item" href="#"><span>Configurações</span></a>
+        <button id="logoutBtn" class="item danger"><span>Sair</span></button>
+      </nav>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="content">
+
+      <!-- Topbar -->
+      <header class="topbar">
+        <form class="search" role="search">
+          <input type="search" placeholder="Buscar tarefas, tags, categorias..." />
+        </form>
+
+        <div class="top-actions">
+          <button class="icon-btn">🔔</button>
+          <button class="icon-btn">⚙️</button>
+          <div id="userChip" class="user-chip">AL</div>
+        </div>
+      </header>
+
+      <!-- Cabeçalho -->
+      <section class="page-head">
+        <div>
+          <h1 class="title">Tarefas</h1>
+          <p class="subtitle">Gerencie o fluxo de trabalho da equipe</p>
+        </div>
+        <button id="openModalBtn" class="primary-btn">+ Nova Tarefa</button>
+      </section>
+
+      <!-- Quadros (colunas) -->
+      <div class="columns" id="taskColumns">
+
+        <div class="column" data-status="backlog">
+          <h2 class="column-title">Backlog</h2>
+          <div class="task-list" id="col-backlog"></div>
+        </div>
+
+        <div class="column" data-status="progress">
+          <h2 class="column-title">Em Progresso</h2>
+          <div class="task-list" id="col-progress"></div>
+        </div>
+
+        <div class="column" data-status="review">
+          <h2 class="column-title">Em Revisão</h2>
+          <div class="task-list" id="col-review"></div>
+        </div>
+
+        <div class="column" data-status="done">
+          <h2 class="column-title">Concluído</h2>
+          <div class="task-list" id="col-done"></div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal: Nova Tarefa -->
+  <div class="modal" id="taskModal">
+    <div class="modal-content">
+      <h2>Nova Tarefa</h2>
+
+      <label>Título</label>
+      <input id="taskTitle" placeholder="Digite o nome da tarefa" />
+
+      <label>Descrição</label>
+      <textarea id="taskDesc" placeholder="Descrição detalhada..."></textarea>
+
+      <label>Status</label>
+      <select id="taskStatus">
+        <option value="backlog">Backlog</option>
+        <option value="progress">Em Progresso</option>
+        <option value="review">Em Revisão</option>
+        <option value="done">Concluído</option>
+      </select>
+
+      <div class="modal-actions">
+        <button class="btn cancel" id="closeModalBtn">Cancelar</button>
+        <button class="btn save" id="saveTaskBtn">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

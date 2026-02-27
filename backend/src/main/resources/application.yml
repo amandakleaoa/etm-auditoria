@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: enterprise-task-manager
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/etm_db?reWriteBatchedInserts=true}
+    username: ${SPRING_DATASOURCE_USERNAME:etm_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:etm_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 50
+
+server:
+  forward-headers-strategy: framework
+
+security:
+  jwt:
+    secret: "999djhcinc2dh9cnvwaszgc83bvcbvszas"
+    expiration: 7200000

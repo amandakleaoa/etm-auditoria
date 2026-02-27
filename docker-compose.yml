@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. Banco de Dados
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: etm_user
+      POSTGRES_PASSWORD: etm_password
+      POSTGRES_DB: etm_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U etm_user -d etm_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Back-end (Spring Boot)
+  backend:
+    build: ./backend
+    ports:
+      - "8082:8080"   # porta externa 8082 → interna 8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/etm_db?reWriteBatchedInserts=true
+      SPRING_DATASOURCE_USERNAME: etm_user
+      SPRING_DATASOURCE_PASSWORD: etm_password
+
+      SECURITY_JWT_SECRET: q1w2e3r4t5y6u7i8o9p0asdfghjklzxcv
+      SECURITY_JWT_EXPIRATION: 86400000   # 1 dia em milissegundos
+
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+  # 3. Front-end
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8082/api
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
