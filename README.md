@@ -1,1 +1,3 @@
-Auditoria de tarefas do projeto etm.
+
+# ETM Auditoria
+Repositório do projeto ETM (backend e frontend).
